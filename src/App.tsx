@@ -5,7 +5,6 @@ import { soundEngine } from './utils/audioSynthesizer';
 import { HeaderTopBar } from './components/HeaderTopBar';
 import { StreetViewController } from './components/StreetViewController';
 import { HarlemStreetGridMap } from './components/HarlemStreetGridMap';
-import { WaypointRail } from './components/WaypointRail';
 import { SmartWasteHubModal } from './components/SmartWasteHubModal';
 import { RoverTelemetryModal } from './components/RoverTelemetryModal';
 import { CanopyMistModal } from './components/CanopyMistModal';
@@ -13,8 +12,7 @@ import { VignetteNarrator } from './components/VignetteNarrator';
 import { FleetGridPanel } from './components/FleetGridPanel';
 import { RealStreetViewModal } from './components/RealStreetViewModal';
 import { VideoTourExporterModal } from './components/VideoTourExporterModal';
-import { HeroAutoplayBar } from './components/HeroAutoplayBar';
-import { Radio, Sparkles, Film, Compass } from 'lucide-react';
+import { BottomCarouselDeck } from './components/BottomCarouselDeck';
 
 const ALL_CORRIDOR_NODES = Object.values(HARLEM_NODES);
 
@@ -227,59 +225,37 @@ export default function App() {
           onTriggerMist={handleTriggerMistBurst}
         />
 
-        {/* Hero Section Continuous Corridors Autoplay Controller */}
-        <HeroAutoplayBar
+        {/* Unified Bottom Deck: Corridors Image Carousel with Autoplay & Telemetry Controls Directly Beneath */}
+        <BottomCarouselDeck
           corridors={ALL_CORRIDOR_NODES}
+          currentNodeId={currentNodeId}
           currentIndex={currentCorridorIndex}
           isPlaying={isAutoplay}
           progressPercent={autoplayProgress}
           onTogglePlay={() => setIsAutoplay(!isAutoplay)}
           onNext={handleNextCorridor}
           onPrev={handlePrevCorridor}
+          onSelectNode={(nodeId) => {
+            handleSelectNode(nodeId);
+            soundEngine.playStepClick();
+          }}
           onSelectIndex={(idx) => {
             handleSelectNode(ALL_CORRIDOR_NODES[idx].id);
             soundEngine.playStepClick();
           }}
+          onOpenVideoExporter={() => setActiveModal('video_exporter')}
+          onOpenFleetGrid={() => setActiveModal('fleet_grid')}
+          roverCount={rovers.filter((r) => r.status === 'sweeping' || r.status === 'patrolling').length || 4}
         />
 
         {/* Floating Harlem Eco-Grid Minimap (Bottom-Left) */}
-        <div className="absolute bottom-6 left-6 z-30 pointer-events-auto">
+        <div className="hidden lg:block absolute bottom-6 left-6 z-30 pointer-events-auto">
           <HarlemStreetGridMap
             currentNodeId={currentNodeId}
             currentHeading={heading}
             rovers={rovers}
             onSelectNode={handleSelectNode}
           />
-        </div>
-
-        {/* Quick Corridor Waypoint Thumbnails (Adjacent to minimap on desktop) */}
-        <div className="hidden xl:block absolute bottom-6 left-68 z-25 pointer-events-auto">
-          <WaypointRail
-            currentNodeId={currentNodeId}
-            onSelectNode={handleSelectNode}
-          />
-        </div>
-
-        {/* Bottom Actions Overlay: Video Tour Export & Fleet Telemetry */}
-        <div className="absolute bottom-6 right-24 z-30 pointer-events-auto flex items-center gap-2">
-          <button
-            onClick={() => setActiveModal('video_exporter')}
-            className="px-3 py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-2xl backdrop-blur-md flex items-center gap-1.5 transition-all hover:border-amber-400 hover:text-amber-200"
-          >
-            <Film className="w-4 h-4 text-amber-400" />
-            <span className="hidden sm:inline">Save Video Tour</span>
-          </button>
-
-          <button
-            onClick={() => setActiveModal('fleet_grid')}
-            className="px-3.5 py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-teal-500/40 text-teal-300 text-xs font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2 transition-all hover:border-teal-400 hover:text-teal-200"
-          >
-            <Radio className="w-4 h-4 animate-pulse" />
-            <span className="hidden sm:inline">Fleet Grid Telemetry</span>
-            <span className="font-mono text-[11px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-200">
-              4 Active
-            </span>
-          </button>
         </div>
 
         {/* Vignette Walkthrough Modal / Overlay */}
