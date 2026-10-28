@@ -62,8 +62,8 @@ export const BottomCarouselDeck: React.FC<Props> = ({
   };
 
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto w-[94vw] max-w-4xl xl:max-w-5xl 2xl:max-w-6xl transition-all">
-      <div className="bg-slate-950/92 border border-slate-700/80 rounded-2xl p-2.5 sm:p-3 shadow-2xl backdrop-blur-md text-white flex flex-col gap-2.5">
+    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto w-[94vw] max-w-2xl sm:max-w-3xl lg:max-w-3xl xl:max-w-4xl transition-all">
+      <div className="liquid-glass-panel rounded-2xl p-2.5 sm:p-3 text-white flex flex-col gap-2.5">
         
         {/* ROW 1: Street View Image Carousel */}
         <div className="relative group/carousel">
@@ -71,7 +71,7 @@ export const BottomCarouselDeck: React.FC<Props> = ({
           <button
             onClick={handleScrollLeft}
             title="Scroll thumbnails left"
-            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-slate-950/80 hover:bg-slate-900 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity backdrop-blur-sm"
+            className="absolute left-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full liquid-glass-btn text-slate-200 hover:text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all cursor-pointer"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
@@ -92,8 +92,8 @@ export const BottomCarouselDeck: React.FC<Props> = ({
                   }}
                   className={`group relative rounded-xl overflow-hidden border transition-all text-left w-32 sm:w-36 h-18 sm:h-20 shrink-0 cursor-pointer ${
                     isCurrent
-                      ? 'border-amber-400 ring-2 ring-amber-400/40 shadow-lg shadow-amber-500/10 scale-[1.02]'
-                      : 'border-slate-800/90 opacity-70 hover:opacity-100 hover:border-slate-600'
+                      ? 'border-amber-400/90 ring-2 ring-amber-400/40 shadow-[0_0_20px_rgba(251,191,36,0.35)] scale-[1.02]'
+                      : 'border-white/15 opacity-75 hover:opacity-100 hover:border-white/35 hover:shadow-[0_6px_16px_rgba(0,0,0,0.4)]'
                   }`}
                 >
                   <img
@@ -108,16 +108,17 @@ export const BottomCarouselDeck: React.FC<Props> = ({
                     }}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent p-1.5 sm:p-2 flex flex-col justify-end">
-                    <span className="text-[10px] font-semibold text-white leading-tight truncate">
+                  {/* Liquid glass gradient scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent p-1.5 sm:p-2 flex flex-col justify-end backdrop-blur-[1px]">
+                    <span className="text-[10px] font-semibold text-white leading-tight truncate drop-shadow-sm">
                       {node.title.split('&')[0]}
                     </span>
-                    <span className="text-[9px] font-mono text-amber-200/90 truncate">
+                    <span className="text-[9px] font-mono text-amber-200/90 truncate drop-shadow-sm">
                       {node.telemetry.fragranceNotes[0]}
                     </span>
                   </div>
                   {isCurrent && (
-                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_8px_#f59e0b] animate-ping" />
                   )}
                 </button>
               );
@@ -128,13 +129,13 @@ export const BottomCarouselDeck: React.FC<Props> = ({
           <button
             onClick={handleScrollRight}
             title="Scroll thumbnails right"
-            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full bg-slate-950/80 hover:bg-slate-900 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-opacity backdrop-blur-sm"
+            className="absolute right-1 top-1/2 -translate-y-1/2 z-10 w-7 h-7 rounded-full liquid-glass-btn text-slate-200 hover:text-white flex items-center justify-center opacity-0 group-hover/carousel:opacity-100 transition-all cursor-pointer"
           >
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* ROW 2: Segmented Corridor Progress Bar */}
+        {/* ROW 2: Liquid Segmented Corridor Progress Bar */}
         <div className="grid grid-cols-9 gap-1.5">
           {corridors.map((c, idx) => {
             const isPast = idx < currentIndex;
@@ -144,14 +145,14 @@ export const BottomCarouselDeck: React.FC<Props> = ({
                 key={c.id}
                 onClick={() => onSelectIndex(idx)}
                 title={`${idx + 1}. ${c.title}`}
-                className="relative h-1.5 rounded-full overflow-hidden bg-slate-800 hover:bg-slate-700 transition-colors cursor-pointer group"
+                className="relative h-1.5 rounded-full overflow-hidden bg-white/10 hover:bg-white/20 border border-white/10 transition-colors cursor-pointer group"
               >
                 <div
                   className={`h-full transition-all duration-100 ${
                     isPast
-                      ? 'bg-amber-400 w-full'
+                      ? 'bg-amber-400 w-full shadow-[0_0_8px_rgba(251,191,36,0.4)]'
                       : isCurrent
-                      ? 'bg-gradient-to-r from-amber-400 to-teal-400'
+                      ? 'bg-gradient-to-r from-amber-400 to-teal-400 shadow-[0_0_12px_rgba(45,212,191,0.6)]'
                       : 'w-0'
                   }`}
                   style={{
@@ -169,27 +170,27 @@ export const BottomCarouselDeck: React.FC<Props> = ({
           {/* Corridor Info */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-semibold flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-amber-400" />
+              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-semibold flex items-center gap-1 drop-shadow-sm">
+                <Sparkles className="w-3 h-3 text-amber-400 drop-shadow" />
                 Corridor {String(currentIndex + 1).padStart(2, '0')} / {String(corridors.length).padStart(2, '0')}
               </span>
-              <span className="text-[10px] text-slate-500 font-mono hidden sm:inline">·</span>
-              <span className="text-[10px] text-teal-300 font-mono hidden sm:inline truncate">
+              <span className="text-[10px] text-white/30 font-mono hidden sm:inline">·</span>
+              <span className="text-[10px] text-teal-300 font-mono hidden sm:inline truncate drop-shadow-sm">
                 {currentCorridor.corridor.split('(')[0]}
               </span>
             </div>
 
-            <h3 className="text-xs sm:text-sm font-bold text-white truncate tracking-tight mt-0.5">
+            <h3 className="text-xs sm:text-sm font-bold text-white truncate tracking-tight mt-0.5 drop-shadow-sm">
               {currentCorridor.title}
             </h3>
           </div>
 
           {/* Autoplay Playback Controls (Center) */}
-          <div className="flex items-center gap-1.5 shrink-0 bg-slate-900/80 px-2 py-1 rounded-xl border border-slate-800">
+          <div className="flex items-center gap-1.5 shrink-0 liquid-glass-panel-subtle px-2 py-1 rounded-xl">
             <button
               onClick={onPrev}
               title="Previous Corridor"
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-lg text-slate-200 hover:text-white hover:bg-white/10 transition-all cursor-pointer active:scale-95"
             >
               <SkipBack className="w-4 h-4" />
             </button>
@@ -197,7 +198,7 @@ export const BottomCarouselDeck: React.FC<Props> = ({
             <button
               onClick={onTogglePlay}
               title={isPlaying ? 'Pause Autoplay' : 'Resume Autoplay Tour'}
-              className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold transition-transform active:scale-95 shadow-md flex items-center gap-1.5"
+              className="liquid-glass-amber-btn px-3 py-1.5 rounded-lg text-slate-950 font-bold transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
             >
               {isPlaying ? (
                 <>
@@ -215,7 +216,7 @@ export const BottomCarouselDeck: React.FC<Props> = ({
             <button
               onClick={onNext}
               title="Next Corridor"
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-1.5 rounded-lg text-slate-200 hover:text-white hover:bg-white/10 transition-all cursor-pointer active:scale-95"
             >
               <SkipForward className="w-4 h-4" />
             </button>
@@ -225,7 +226,7 @@ export const BottomCarouselDeck: React.FC<Props> = ({
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={onOpenVideoExporter}
-              className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-lg backdrop-blur-md flex items-center gap-1.5 transition-all hover:border-amber-400 hover:text-amber-200 cursor-pointer"
+              className="liquid-glass-btn px-2.5 sm:px-3 py-1.5 rounded-xl border-amber-400/35 text-amber-200 text-xs font-semibold flex items-center gap-1.5 transition-all hover:border-amber-400/70 hover:text-amber-100 cursor-pointer"
             >
               <Film className="w-3.5 h-3.5 text-amber-400" />
               <span className="hidden sm:inline">Save Video Tour</span>
@@ -234,11 +235,11 @@ export const BottomCarouselDeck: React.FC<Props> = ({
 
             <button
               onClick={onOpenFleetGrid}
-              className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-850 border border-teal-500/40 text-teal-300 text-xs font-semibold shadow-lg backdrop-blur-md flex items-center gap-1.5 transition-all hover:border-teal-400 hover:text-teal-200 cursor-pointer"
+              className="liquid-glass-btn px-2.5 sm:px-3 py-1.5 rounded-xl border-teal-400/35 text-teal-200 text-xs font-semibold flex items-center gap-1.5 transition-all hover:border-teal-400/70 hover:text-teal-100 cursor-pointer"
             >
               <Radio className="w-3.5 h-3.5 text-teal-400 animate-pulse" />
               <span className="hidden md:inline">Fleet Grid Telemetry</span>
-              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-200">
+              <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-full bg-teal-500/25 text-teal-100 border border-teal-400/30">
                 {roverCount} Active
               </span>
             </button>

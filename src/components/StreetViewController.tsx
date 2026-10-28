@@ -347,13 +347,13 @@ export const StreetViewController: React.FC<Props> = ({
               >
                 {/* Floating Chevron Target Ring */}
                 <div className="relative flex items-center justify-center">
-                  <div className="w-14 h-14 rounded-full border-2 border-white/80 bg-slate-950/70 backdrop-blur-md shadow-2xl flex items-center justify-center group-hover:border-teal-400 group-hover:bg-teal-950/80 transition-colors">
+                  <div className="w-14 h-14 rounded-full liquid-glass-panel border-2 border-white/70 shadow-2xl flex items-center justify-center group-hover:border-teal-400 group-hover:shadow-[0_0_24px_rgba(45,212,191,0.6)] transition-all">
                     <ChevronUp className="w-7 h-7 text-white group-hover:text-teal-300 transition-colors" />
                   </div>
-                  <div className="absolute inset-0 rounded-full border border-teal-400/40 animate-ping" />
+                  <div className="absolute inset-0 rounded-full border border-teal-400/50 animate-ping" />
                 </div>
                 {/* Street Label Kicker */}
-                <span className="mt-2 px-2.5 py-1 rounded-md bg-slate-900/90 border border-slate-700 text-xs font-semibold text-slate-100 whitespace-nowrap shadow-lg group-hover:border-teal-400 group-hover:text-teal-200 transition-colors">
+                <span className="mt-2 px-2.5 py-1 rounded-lg liquid-glass-panel text-xs font-semibold text-white whitespace-nowrap shadow-xl group-hover:border-teal-400/80 group-hover:text-teal-200 transition-colors">
                   {conn.label} ({conn.distanceMeters}m)
                 </span>
               </button>
@@ -361,7 +361,7 @@ export const StreetViewController: React.FC<Props> = ({
           );
         })}
 
-        {/* 3D Interactive Hotspots in Scene */}
+        {/* 3D Interactive Hotspots in Scene with Liquid Glass */}
         {node.hotspots.map((hotspot) => {
           const coords = getScreenCoordinates(hotspot.yaw, hotspot.pitch);
           if (!coords.isVisible) return null;
@@ -378,17 +378,17 @@ export const StreetViewController: React.FC<Props> = ({
             >
               <button
                 onClick={() => onOpenHotspot(hotspot)}
-                className="group relative flex items-center gap-2 p-1.5 pr-3 rounded-full bg-slate-950/85 border border-amber-500/60 shadow-xl backdrop-blur-md hover:border-amber-400 hover:bg-slate-900 transition-all hover:scale-105 active:scale-95"
+                className="group relative flex items-center gap-2 p-1.5 pr-3 rounded-full liquid-glass-panel border-amber-400/60 shadow-xl hover:border-amber-400 hover:shadow-[0_0_20px_rgba(251,191,36,0.4)] transition-all hover:scale-105 active:scale-95 cursor-pointer"
               >
                 <div
-                  className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                  className={`w-7 h-7 rounded-full flex items-center justify-center shadow-inner ${
                     hotspot.type === 'waste_hub'
-                      ? 'bg-amber-500/20 text-amber-300 glow-teal-ring'
+                      ? 'bg-amber-500/25 text-amber-200 glow-teal-ring border border-amber-400/40'
                       : hotspot.type === 'sweeper_rover'
-                      ? 'bg-teal-500/20 text-teal-300'
+                      ? 'bg-teal-500/25 text-teal-200 border border-teal-400/40'
                       : hotspot.type === 'mist_nozzle'
-                      ? 'bg-emerald-500/20 text-emerald-300'
-                      : 'bg-purple-500/20 text-purple-300'
+                      ? 'bg-emerald-500/25 text-emerald-200 border border-emerald-400/40'
+                      : 'bg-purple-500/25 text-purple-200 border border-purple-400/40'
                   }`}
                 >
                   {hotspot.type === 'waste_hub' && <Sparkles className="w-4 h-4" />}
@@ -400,10 +400,10 @@ export const StreetViewController: React.FC<Props> = ({
                 </div>
 
                 <div className="text-left">
-                  <div className="text-[11px] font-semibold text-white tracking-tight leading-none group-hover:text-amber-200">
+                  <div className="text-[11px] font-semibold text-white tracking-tight leading-none group-hover:text-amber-200 drop-shadow-sm">
                     {hotspot.title}
                   </div>
-                  <div className="text-[9px] text-slate-400 font-mono mt-0.5">{hotspot.distance} · Inspect</div>
+                  <div className="text-[9px] text-slate-300/80 font-mono mt-0.5">{hotspot.distance} · Inspect</div>
                 </div>
               </button>
             </div>
@@ -411,38 +411,41 @@ export const StreetViewController: React.FC<Props> = ({
         })}
       </div>
 
-      {/* TOP-LEFT: Authentic Google Street View Address Bar */}
+      {/* TOP-LEFT: Authentic Google Street View Address Bar with Liquid Glass */}
       <div className="absolute top-4 left-4 z-30 interactive-control pointer-events-auto max-w-sm sm:max-w-md">
-        <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-3 shadow-2xl backdrop-blur-md text-white">
+        <div className="liquid-glass-panel rounded-2xl p-3 sm:p-3.5 text-white">
           <div className="flex items-center justify-between gap-2 mb-1">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-teal-400 font-semibold">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-teal-300 font-semibold flex items-center gap-1 drop-shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-400 shadow-[0_0_6px_#2dd4bf]" />
               Harlem Eco-District · World Model
             </span>
-            <span className="text-[10px] font-mono text-slate-400 tabular-nums">
+            <span className="text-[10px] font-mono text-slate-300/80 tabular-nums">
               {node.coordinates.lat.toFixed(4)}° N, {Math.abs(node.coordinates.lng).toFixed(4)}° W
             </span>
           </div>
 
-          <h2 className="text-sm sm:text-base font-bold text-white tracking-tight truncate">{node.title}</h2>
-          <p className="text-xs text-slate-300 truncate mt-0.5">{node.address}</p>
+          <h2 className="text-sm sm:text-base font-bold text-white tracking-tight truncate drop-shadow-sm">{node.title}</h2>
+          <p className="text-xs text-slate-300/90 truncate mt-0.5">{node.address}</p>
 
-          <div className="mt-2 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+          <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-300 font-mono">
             <span>Canopy: {node.telemetry.canopyDensity.split(' ')[0]} 88%</span>
-            <span className="text-emerald-400">AQI: {node.telemetry.airQualityIndex} (Pristine)</span>
-            <span>{node.telemetry.ambientTempF}°F</span>
+            <span className="text-emerald-300 font-semibold drop-shadow-sm">AQI: {node.telemetry.airQualityIndex} (Pristine)</span>
+            <span className="text-amber-200/90">{node.telemetry.ambientTempF}°F</span>
           </div>
         </div>
       </div>
 
-      {/* TOP-RIGHT: Street View Controls & Tools Bar */}
+      {/* TOP-RIGHT: Street View Controls & Tools Bar with Liquid Glass */}
       <div className="absolute top-4 right-4 z-30 interactive-control pointer-events-auto flex items-center gap-2">
         {/* POV Mode Selector */}
-        <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-1 shadow-xl backdrop-blur-md flex items-center gap-1">
+        <div className="liquid-glass-panel rounded-xl p-1 flex items-center gap-1">
           <button
             onClick={() => onPovModeChange('pedestrian')}
             title="Pedestrian Eye-Level View (1.75m)"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              povMode === 'pedestrian' ? 'bg-amber-500 text-slate-950 font-semibold' : 'text-slate-300 hover:text-white'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              povMode === 'pedestrian'
+                ? 'liquid-glass-amber-btn text-slate-950 font-bold'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             Pedestrian
@@ -450,8 +453,10 @@ export const StreetViewController: React.FC<Props> = ({
           <button
             onClick={() => onPovModeChange('rover_lidar')}
             title="Sweeper Rover LiDAR Cockpit View (0.45m)"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              povMode === 'rover_lidar' ? 'bg-teal-500 text-slate-950 font-semibold' : 'text-slate-300 hover:text-white'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              povMode === 'rover_lidar'
+                ? 'bg-teal-400 text-slate-950 font-bold shadow-[0_0_12px_rgba(45,212,191,0.5)] border border-white/40'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             Rover LiDAR
@@ -459,8 +464,10 @@ export const StreetViewController: React.FC<Props> = ({
           <button
             onClick={() => onPovModeChange('stoop_balcony')}
             title="Brownstone Stoop Balcony View (3.4m)"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              povMode === 'stoop_balcony' ? 'bg-purple-500 text-white font-semibold' : 'text-slate-300 hover:text-white'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              povMode === 'stoop_balcony'
+                ? 'bg-purple-500 text-white font-bold shadow-[0_0_12px_rgba(168,85,247,0.5)] border border-white/40'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             Stoop View
@@ -468,8 +475,10 @@ export const StreetViewController: React.FC<Props> = ({
           <button
             onClick={() => onPovModeChange('canopy_drone')}
             title="Canopy Drone Aerial View (14m)"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-              povMode === 'canopy_drone' ? 'bg-emerald-500 text-slate-950 font-semibold' : 'text-slate-300 hover:text-white'
+            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${
+              povMode === 'canopy_drone'
+                ? 'bg-emerald-400 text-slate-950 font-bold shadow-[0_0_12px_rgba(52,211,153,0.5)] border border-white/40'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             Canopy Drone
@@ -477,12 +486,14 @@ export const StreetViewController: React.FC<Props> = ({
         </div>
 
         {/* Time of Day Lighting Toggle */}
-        <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-1 shadow-xl backdrop-blur-md flex items-center">
+        <div className="liquid-glass-panel rounded-xl p-1 flex items-center">
           <button
             onClick={() => onTimeOfDayChange('midday')}
             title="Midday Sun (Sharp palm shadows)"
-            className={`p-1.5 rounded-lg text-xs transition-colors ${
-              timeOfDay === 'midday' ? 'bg-amber-500/20 text-amber-300' : 'text-slate-400 hover:text-white'
+            className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              timeOfDay === 'midday'
+                ? 'bg-amber-400/30 text-amber-200 border border-amber-400/40 shadow-[0_0_8px_rgba(251,191,36,0.4)]'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             <Sun className="w-4 h-4" />
@@ -490,8 +501,10 @@ export const StreetViewController: React.FC<Props> = ({
           <button
             onClick={() => onTimeOfDayChange('golden_hour')}
             title="Golden Hour (Warm brownstone glow)"
-            className={`p-1.5 rounded-lg text-xs transition-colors ${
-              timeOfDay === 'golden_hour' ? 'bg-amber-500/20 text-amber-300' : 'text-slate-400 hover:text-white'
+            className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              timeOfDay === 'golden_hour'
+                ? 'bg-amber-400/30 text-amber-200 border border-amber-400/40 shadow-[0_0_8px_rgba(251,191,36,0.4)]'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             <Sunset className="w-4 h-4" />
@@ -499,8 +512,10 @@ export const StreetViewController: React.FC<Props> = ({
           <button
             onClick={() => onTimeOfDayChange('twilight')}
             title="Twilight / Neon Night (Apollo marquee & teal waste rings)"
-            className={`p-1.5 rounded-lg text-xs transition-colors ${
-              timeOfDay === 'twilight' ? 'bg-teal-500/20 text-teal-300' : 'text-slate-400 hover:text-white'
+            className={`p-1.5 rounded-lg text-xs transition-all cursor-pointer ${
+              timeOfDay === 'twilight'
+                ? 'bg-teal-400/30 text-teal-200 border border-teal-400/40 shadow-[0_0_8px_rgba(45,212,191,0.4)]'
+                : 'text-slate-300 hover:text-white hover:bg-white/10'
             }`}
           >
             <Moon className="w-4 h-4" />
@@ -511,8 +526,8 @@ export const StreetViewController: React.FC<Props> = ({
         <button
           onClick={onTriggerMist}
           title="Trigger Sunlit Tree Trunk Mist Micro-Cooling"
-          className={`p-2 rounded-xl bg-slate-950/90 border border-slate-800 shadow-xl backdrop-blur-md transition-colors ${
-            mistActive ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40' : 'text-slate-300 hover:text-white'
+          className={`p-2 rounded-xl liquid-glass-btn transition-all cursor-pointer ${
+            mistActive ? 'bg-emerald-500/30 text-emerald-200 border-emerald-400/60 shadow-[0_0_12px_rgba(52,211,153,0.5)]' : 'text-slate-200 hover:text-white'
           }`}
         >
           <CloudRain className="w-4 h-4" />
@@ -522,60 +537,60 @@ export const StreetViewController: React.FC<Props> = ({
         <button
           onClick={onToggleMute}
           title={isMuted ? 'Unmute Harlem ambient soundscape' : 'Mute soundscape'}
-          className="p-2 rounded-xl bg-slate-950/90 border border-slate-800 text-slate-300 hover:text-white shadow-xl backdrop-blur-md transition-colors"
+          className="p-2 rounded-xl liquid-glass-btn text-slate-200 hover:text-white transition-all cursor-pointer"
         >
-          {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-teal-400" />}
+          {isMuted ? <VolumeX className="w-4 h-4 text-rose-300" /> : <Volume2 className="w-4 h-4 text-teal-300" />}
         </button>
 
         {/* Fullscreen Toggle */}
         <button
           onClick={toggleFullscreen}
           title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
-          className="p-2 rounded-xl bg-slate-950/90 border border-slate-800 text-slate-300 hover:text-white shadow-xl backdrop-blur-md transition-colors"
+          className="p-2 rounded-xl liquid-glass-btn text-slate-200 hover:text-white transition-all cursor-pointer"
         >
           {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
         </button>
       </div>
 
-      {/* BOTTOM-RIGHT: Compass & Zoom Controls */}
+      {/* BOTTOM-RIGHT: Compass & Zoom Controls with Liquid Glass */}
       <div className="absolute bottom-6 right-6 z-30 interactive-control pointer-events-auto flex flex-col items-center gap-2">
         {/* Compass Widget */}
         <button
           onClick={handleResetNorth}
           title="Click to face North (0°)"
-          className="relative w-11 h-11 rounded-full bg-slate-950/90 border border-slate-700 shadow-2xl backdrop-blur-md flex items-center justify-center hover:border-amber-400 transition-colors group"
+          className="relative w-11 h-11 rounded-full liquid-glass-panel flex items-center justify-center hover:border-amber-400/80 transition-all group cursor-pointer"
         >
           <div
             className="w-full h-full flex items-center justify-center transition-transform duration-150"
             style={{ transform: `rotate(${-heading}deg)` }}
           >
             {/* North Red Pointer */}
-            <div className="w-0.5 h-3.5 bg-rose-500 absolute top-1 rounded-t" />
-            <div className="w-0.5 h-3.5 bg-slate-400 absolute bottom-1 rounded-b" />
-            <span className="text-[8px] font-bold text-rose-400 absolute top-4 font-mono">N</span>
+            <div className="w-0.5 h-3.5 bg-rose-500 absolute top-1 rounded-t shadow-[0_0_4px_#f43f5e]" />
+            <div className="w-0.5 h-3.5 bg-slate-300 absolute bottom-1 rounded-b" />
+            <span className="text-[8px] font-bold text-rose-300 absolute top-4 font-mono">N</span>
           </div>
         </button>
 
         {/* Zoom In/Out Buttons */}
-        <div className="bg-slate-950/90 border border-slate-800 rounded-xl shadow-2xl backdrop-blur-md overflow-hidden flex flex-col">
+        <div className="liquid-glass-panel rounded-xl overflow-hidden flex flex-col">
           <button
             onClick={() => onFovChange(Math.max(45, fov - 8))}
             title="Zoom in (+)"
-            className="p-2 text-slate-300 hover:text-white hover:bg-slate-800 border-b border-slate-800 transition-colors"
+            className="p-2 text-slate-200 hover:text-white hover:bg-white/10 border-b border-white/10 transition-colors cursor-pointer"
           >
             <Plus className="w-4 h-4" />
           </button>
           <button
             onClick={() => onFovChange(Math.min(95, fov + 8))}
             title="Zoom out (-)"
-            className="p-2 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-2 text-slate-200 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <Minus className="w-4 h-4" />
           </button>
         </div>
 
         {/* Keyboard Hints helper */}
-        <div className="hidden sm:block text-[9px] font-mono text-slate-400 bg-slate-950/80 px-2 py-1 rounded border border-slate-800 text-center">
+        <div className="hidden sm:block text-[9px] font-mono text-slate-300 liquid-glass-panel-subtle px-2 py-1 rounded text-center">
           DRAG OR ARROWS
         </div>
       </div>
