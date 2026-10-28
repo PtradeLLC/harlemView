@@ -13,7 +13,10 @@ import { VignetteNarrator } from './components/VignetteNarrator';
 import { FleetGridPanel } from './components/FleetGridPanel';
 import { RealStreetViewModal } from './components/RealStreetViewModal';
 import { VideoTourExporterModal } from './components/VideoTourExporterModal';
+import { HeroAutoplayBar } from './components/HeroAutoplayBar';
 import { Radio, Sparkles, Film, Compass } from 'lucide-react';
+
+const ALL_CORRIDOR_NODES = Object.values(HARLEM_NODES);
 
 export default function App() {
   const [currentNodeId, setCurrentNodeId] = useState<string>('node_apollo_125');
@@ -27,6 +30,10 @@ export default function App() {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const [mistActive, setMistActive] = useState<boolean>(false);
 
+  // Hero Corridors Autoplay State
+  const [isAutoplay, setIsAutoplay] = useState<boolean>(true);
+  const [autoplayProgress, setAutoplayProgress] = useState<number>(0);
+
   // Modals & Drawers
   const [activeModal, setActiveModal] = useState<
     'waste_hub' | 'rover' | 'mist' | 'fleet_grid' | 'real_street_view' | 'video_exporter' | null
@@ -36,6 +43,11 @@ export default function App() {
   const [smartHub, setSmartHub] = useState<SmartWasteHub>(INITIAL_SMART_HUB);
   const [isVignetteOpen, setIsVignetteOpen] = useState<boolean>(false);
 
+  const currentCorridorIndex = Math.max(
+    0,
+    ALL_CORRIDOR_NODES.findIndex((n) => n.id === currentNodeId)
+  );
+
   // Switch node and restore default camera orientation smoothly
   const handleSelectNode = (nodeId: string, customHeading?: number, customPitch?: number) => {
     const target = HARLEM_NODES[nodeId];
@@ -44,8 +56,49 @@ export default function App() {
       setHeading(customHeading !== undefined ? customHeading : target.defaultHeading);
       setPitch(customPitch !== undefined ? customPitch : target.defaultPitch);
       setFov(target.defaultFov);
+      setAutoplayProgress(0);
     }
   };
+
+  const handleNextCorridor = () => {
+    const nextIdx = (currentCorridorIndex + 1) % ALL_CORRIDOR_NODES.length;
+    handleSelectNode(ALL_CORRIDOR_NODES[nextIdx].id);
+    soundEngine.playStepClick();
+  };
+
+  const handlePrevCorridor = () => {
+    const prevIdx = (currentCorridorIndex - 1 + ALL_CORRIDOR_NODES.length) % ALL_CORRIDOR_NODES.length;
+    handleSelectNode(ALL_CORRIDOR_NODES[prevIdx].id);
+    soundEngine.playStepClick();
+  };
+
+  // Hero Continuous Autoplay Timer (cycles corridors every 7 seconds)
+  useEffect(() => {
+    if (!isAutoplay || activeModal !== null || isVignetteOpen) return;
+
+    const interval = setInterval(() => {
+      setAutoplayProgress((prev) => {
+        if (prev >= 100) {
+          const nextIdx = (currentCorridorIndex + 1) % ALL_CORRIDOR_NODES.length;
+          const nextNode = ALL_CORRIDOR_NODES[nextIdx];
+          setCurrentNodeId(nextNode.id);
+          setHeading(nextNode.defaultHeading);
+          setPitch(nextNode.defaultPitch);
+          setFov(nextNode.defaultFov);
+
+          // Subtle transition acoustic cue
+          soundEngine.playStepClick();
+          if (nextNode.id.includes('mural') || nextNode.id.includes('mintons') || nextNode.id.includes('apollo')) {
+            soundEngine.playJazzChord();
+          }
+          return 0;
+        }
+        return prev + 1.5; // ~6.6s per corridor
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, [isAutoplay, activeModal, isVignetteOpen, currentCorridorIndex]);
 
   const handleOpenHotspot = (hotspot: Hotspot) => {
     soundEngine.playStepClick();
@@ -161,6 +214,8 @@ export default function App() {
           timeOfDay={timeOfDay}
           isMuted={isMuted}
           mistActive={mistActive}
+          isAutoplay={isAutoplay}
+          onUserInteract={() => setIsAutoplay(false)}
           onHeadingChange={setHeading}
           onPitchChange={setPitch}
           onFovChange={setFov}
@@ -170,6 +225,21 @@ export default function App() {
           onTimeOfDayChange={setTimeOfDay}
           onToggleMute={handleToggleMute}
           onTriggerMist={handleTriggerMistBurst}
+        />
+
+        {/* Hero Section Continuous Corridors Autoplay Controller */}
+        <HeroAutoplayBar
+          corridors={ALL_CORRIDOR_NODES}
+          currentIndex={currentCorridorIndex}
+          isPlaying={isAutoplay}
+          progressPercent={autoplayProgress}
+          onTogglePlay={() => setIsAutoplay(!isAutoplay)}
+          onNext={handleNextCorridor}
+          onPrev={handlePrevCorridor}
+          onSelectIndex={(idx) => {
+            handleSelectNode(ALL_CORRIDOR_NODES[idx].id);
+            soundEngine.playStepClick();
+          }}
         />
 
         {/* Floating Harlem Eco-Grid Minimap (Bottom-Left) */}

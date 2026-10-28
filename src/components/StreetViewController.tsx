@@ -29,7 +29,9 @@ interface Props {
   timeOfDay: TimeOfDay;
   isMuted: boolean;
   mistActive: boolean;
-  onHeadingChange: (heading: number) => void;
+  isAutoplay?: boolean;
+  onUserInteract?: () => void;
+  onHeadingChange: (heading: number | ((prev: number) => number)) => void;
   onPitchChange: (pitch: number) => void;
   onFovChange: (fov: number) => void;
   onSelectWaypoint: (targetId: string) => void;
@@ -49,6 +51,8 @@ export const StreetViewController: React.FC<Props> = ({
   timeOfDay,
   isMuted,
   mistActive,
+  isAutoplay = false,
+  onUserInteract,
   onHeadingChange,
   onPitchChange,
   onFovChange,
@@ -66,6 +70,20 @@ export const StreetViewController: React.FC<Props> = ({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  // Smooth continuous pan drift when in Autoplay mode
+  useEffect(() => {
+    if (!isAutoplay) return;
+    let animId: number;
+    const driftLoop = () => {
+      if (!isDraggingRef.current) {
+        onHeadingChange((prev: number) => (prev + 0.04) % 360);
+      }
+      animId = requestAnimationFrame(driftLoop);
+    };
+    animId = requestAnimationFrame(driftLoop);
+    return () => cancelAnimationFrame(animId);
+  }, [isAutoplay, onHeadingChange]);
+
   // Smooth angle normalization
   const normalizeAngle = (angle: number) => {
     return ((angle % 360) + 360) % 360;
@@ -74,6 +92,7 @@ export const StreetViewController: React.FC<Props> = ({
   // Drag look around handlers
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('.interactive-control')) return;
+    if (onUserInteract) onUserInteract();
     isDraggingRef.current = true;
     startMousePos.current = { x: e.clientX, y: e.clientY };
     startAngles.current = { heading, pitch };
@@ -102,6 +121,7 @@ export const StreetViewController: React.FC<Props> = ({
   // Touch handlers
   const handleTouchStart = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest('.interactive-control')) return;
+    if (onUserInteract) onUserInteract();
     if (e.touches.length === 1) {
       isDraggingRef.current = true;
       startMousePos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
