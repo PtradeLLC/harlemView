@@ -11,7 +11,9 @@ import { RoverTelemetryModal } from './components/RoverTelemetryModal';
 import { CanopyMistModal } from './components/CanopyMistModal';
 import { VignetteNarrator } from './components/VignetteNarrator';
 import { FleetGridPanel } from './components/FleetGridPanel';
-import { Radio, Sparkles } from 'lucide-react';
+import { RealStreetViewModal } from './components/RealStreetViewModal';
+import { VideoTourExporterModal } from './components/VideoTourExporterModal';
+import { Radio, Sparkles, Film, Compass } from 'lucide-react';
 
 export default function App() {
   const [currentNodeId, setCurrentNodeId] = useState<string>('node_apollo_125');
@@ -26,7 +28,9 @@ export default function App() {
   const [mistActive, setMistActive] = useState<boolean>(false);
 
   // Modals & Drawers
-  const [activeModal, setActiveModal] = useState<'waste_hub' | 'rover' | 'mist' | 'fleet_grid' | null>(null);
+  const [activeModal, setActiveModal] = useState<
+    'waste_hub' | 'rover' | 'mist' | 'fleet_grid' | 'real_street_view' | 'video_exporter' | null
+  >(null);
   const [selectedRover, setSelectedRover] = useState<AutonomousRover>(INITIAL_ROVERS[0]);
   const [rovers, setRovers] = useState<AutonomousRover[]>(INITIAL_ROVERS);
   const [smartHub, setSmartHub] = useState<SmartWasteHub>(INITIAL_SMART_HUB);
@@ -142,6 +146,8 @@ export default function App() {
           soundEngine.playJazzChord();
           setIsVignetteOpen(true);
         }}
+        onOpenRealStreetView={() => setActiveModal('real_street_view')}
+        onOpenVideoExporter={() => setActiveModal('video_exporter')}
       />
 
       {/* Main Street View Viewport */}
@@ -184,8 +190,16 @@ export default function App() {
           />
         </div>
 
-        {/* Open Fleet Telemetry Grid Button (Bottom-Right overlay) */}
-        <div className="absolute bottom-6 right-24 z-30 pointer-events-auto">
+        {/* Bottom Actions Overlay: Video Tour Export & Fleet Telemetry */}
+        <div className="absolute bottom-6 right-24 z-30 pointer-events-auto flex items-center gap-2">
+          <button
+            onClick={() => setActiveModal('video_exporter')}
+            className="px-3 py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-amber-500/40 text-amber-300 text-xs font-semibold shadow-2xl backdrop-blur-md flex items-center gap-1.5 transition-all hover:border-amber-400 hover:text-amber-200"
+          >
+            <Film className="w-4 h-4 text-amber-400" />
+            <span className="hidden sm:inline">Save Video Tour</span>
+          </button>
+
           <button
             onClick={() => setActiveModal('fleet_grid')}
             className="px-3.5 py-2 rounded-xl bg-slate-950/90 hover:bg-slate-900 border border-teal-500/40 text-teal-300 text-xs font-semibold shadow-2xl backdrop-blur-md flex items-center gap-2 transition-all hover:border-teal-400 hover:text-teal-200"
@@ -203,6 +217,21 @@ export default function App() {
           <VignetteNarrator
             onClose={() => setIsVignetteOpen(false)}
             onJumpToNode={handleSelectNode}
+          />
+        )}
+
+        {/* Real Google Street View & Maps Comparison Modal */}
+        {activeModal === 'real_street_view' && (
+          <RealStreetViewModal
+            currentNodeId={currentNodeId}
+            onClose={() => setActiveModal(null)}
+          />
+        )}
+
+        {/* Cinematic Video Tour Exporter & Player Modal */}
+        {activeModal === 'video_exporter' && (
+          <VideoTourExporterModal
+            onClose={() => setActiveModal(null)}
           />
         )}
 

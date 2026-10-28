@@ -5,12 +5,16 @@ interface Props {
   activeCorridorId: string;
   onSelectNode: (nodeId: string) => void;
   onStartVignette: () => void;
+  onOpenRealStreetView: () => void;
+  onOpenVideoExporter: () => void;
 }
 
 export const HeaderTopBar: React.FC<Props> = ({
   activeCorridorId,
   onSelectNode,
   onStartVignette,
+  onOpenRealStreetView,
+  onOpenVideoExporter,
 }) => {
   const navLinks = [
     { id: 'node_apollo_125', label: '125th Corridor' },
@@ -57,8 +61,24 @@ export const HeaderTopBar: React.FC<Props> = ({
         })}
       </nav>
 
-      {/* Zone 3: 1 primary action */}
-      <div className="flex items-center gap-3 shrink-0">
+      {/* Zone 3: Primary action cluster */}
+      <div className="flex items-center gap-2.5 shrink-0">
+        <button
+          onClick={onOpenRealStreetView}
+          title="Compare with real Google Street View"
+          className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-300 bg-slate-900 hover:bg-slate-850 hover:text-white border border-slate-700/80 rounded-lg transition-colors whitespace-nowrap shrink-0"
+        >
+          Google Street View
+        </button>
+
+        <button
+          onClick={onOpenVideoExporter}
+          title="Export and save 1080p video tour"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-amber-200 bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/40 rounded-lg transition-colors whitespace-nowrap shrink-0"
+        >
+          Save Video
+        </button>
+
         <button
           onClick={onStartVignette}
           className="px-3.5 py-1.5 text-xs font-semibold text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-lg shadow-sm transition-all whitespace-nowrap shrink-0 flex items-center gap-1.5"
