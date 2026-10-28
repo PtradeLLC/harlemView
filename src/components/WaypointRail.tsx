@@ -28,6 +28,12 @@ export const WaypointRail: React.FC<Props> = ({ currentNodeId, onSelectNode }) =
                 src={node.imageSrc}
                 alt={node.title}
                 referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const filename = node.imageSrc.split('/').pop()?.split('?')[0];
+                  if (filename && !e.currentTarget.src.includes('/assets/images/' + filename)) {
+                    e.currentTarget.src = '/assets/images/' + filename;
+                  }
+                }}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-2 flex flex-col justify-end">

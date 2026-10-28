@@ -1,4 +1,9 @@
 import { StreetViewNode, AutonomousRover, SmartWasteHub } from '../types/worldModel';
+import apolloImg from '../assets/images/harlem_125th_apollo_1793215269026.jpg';
+import malcolmXImg from '../assets/images/harlem_malcolm_x_blvd_1793215269966.jpg';
+import brownstoneStoopImg from '../assets/images/harlem_brownstone_stoop_1793215271229.jpg';
+import muralAlleyImg from '../assets/images/harlem_mural_alley_1793215271966.jpg';
+import roverDockingImg from '../assets/images/harlem_rover_docking_1793215272492.jpg';
 
 export const HARLEM_NODES: Record<string, StreetViewNode> = {
   node_apollo_125: {
@@ -10,7 +15,7 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
     defaultHeading: 350,
     defaultPitch: -2,
     defaultFov: 75,
-    imageSrc: '/src/assets/images/harlem_125th_apollo_1793215269026.jpg',
+    imageSrc: apolloImg,
     description:
       'Towering Canary Island date palms line 125th Street, casting intricate lattice shadows onto permeable white-limestone pavers. The Apollo Theater marquee illuminates the promenade, where brass music drifts from sidewalk cafes and smart waste hubs seamlessly compress street refuse.',
     connections: [
@@ -88,7 +93,7 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
     defaultHeading: 15,
     defaultPitch: -4,
     defaultFov: 75,
-    imageSrc: '/src/assets/images/harlem_malcolm_x_blvd_1793215269966.jpg',
+    imageSrc: malcolmXImg,
     description:
       'Wide grand boulevard lined with majestic climate-hardened date palms and slender fan palms. Classic 19th-century red-brick facades contrast with sleek autonomous sweepers gliding silently along the curb, maintaining immaculate white limestone sidewalks.',
     connections: [
@@ -166,7 +171,7 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
     defaultHeading: 25,
     defaultPitch: -3,
     defaultFov: 75,
-    imageSrc: '/src/assets/images/harlem_brownstone_stoop_1793215271229.jpg',
+    imageSrc: brownstoneStoopImg,
     description:
       'Polished sandstone stoops with ornate wrought-iron railings framed by tropical date palm fronds and vibrant hibiscus blossoms. An autonomous spider-wheeled facade polisher glides along the curb, gently sanitizing surfaces with chemical-free deionized water vapor.',
     connections: [
@@ -227,7 +232,7 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
     defaultHeading: 5,
     defaultPitch: -2,
     defaultFov: 75,
-    imageSrc: '/src/assets/images/harlem_mural_alley_1793215271966.jpg',
+    imageSrc: muralAlleyImg,
     description:
       'Resurfaced smooth cobblestone alleyway vibrant with public murals honoring Duke Ellington, Billie Holiday, and Thelonious Monk. Shaded by dwarf fan palms in stone planters, an autonomous eco-sweep rover quietly sweeps micro-debris with a soft teal status beacon.',
     connections: [
@@ -288,7 +293,7 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
     defaultHeading: 20,
     defaultPitch: -5,
     defaultFov: 75,
-    imageSrc: '/src/assets/images/harlem_rover_docking_1793215272492.jpg',
+    imageSrc: roverDockingImg,
     description:
       'Sleek matte-black hexagonal sanitation rover #214 docked at a recessed bronze solar charging station integrated into the base of a Canary palm planter. Telemetry shows fast induction recharge while subterranean pneumatic bins process sector waste.',
     connections: [

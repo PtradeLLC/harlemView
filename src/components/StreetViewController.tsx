@@ -255,6 +255,12 @@ export const StreetViewController: React.FC<Props> = ({
           src={node.imageSrc}
           alt={node.title}
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const filename = node.imageSrc.split('/').pop()?.split('?')[0];
+            if (filename && !e.currentTarget.src.includes('/assets/images/' + filename)) {
+              e.currentTarget.src = '/assets/images/' + filename;
+            }
+          }}
           className="w-full h-full object-cover pointer-events-none transition-all duration-700"
           style={{
             filter: getAtmosphereFilter(),
