@@ -11,7 +11,7 @@ export const WaypointRail: React.FC<Props> = ({ currentNodeId, onSelectNode }) =
   return (
     <div className="absolute bottom-6 left-6 z-30 pointer-events-auto flex items-end gap-3">
       {/* Waypoints Thumbnail Rail */}
-      <div className="hidden lg:flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950/90 border border-slate-800 shadow-2xl backdrop-blur-md">
+      <div className="hidden lg:flex items-center gap-2 p-1.5 rounded-2xl bg-slate-950/90 border border-slate-800 shadow-2xl backdrop-blur-md overflow-x-auto max-w-[58vw] scrollbar-none">
         {Object.values(HARLEM_NODES).map((node) => {
           const isCurrent = node.id === currentNodeId;
           return (

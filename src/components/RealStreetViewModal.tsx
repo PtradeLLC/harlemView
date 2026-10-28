@@ -40,6 +40,27 @@ export const RealStreetViewModal: React.FC<Props> = ({ currentNodeId, onClose })
       embedUrl:
         'https://maps.google.com/maps?q=Astor+Row+130+W+130th+St+New+York&t=&z=18&ie=UTF8&iwloc=&output=embed',
     },
+    marcus_garvey: {
+      title: 'Marcus Garvey Park & Watchtower',
+      address: '631 Mount Morris Park W, New York, NY 10027',
+      coordinates: '40.8044, -73.9439',
+      embedUrl:
+        'https://maps.google.com/maps?q=Marcus+Garvey+Park+New+York&t=&z=17&ie=UTF8&iwloc=&output=embed',
+    },
+    strivers_row: {
+      title: "Historic Strivers' Row (W 138th St)",
+      address: '201 W 138th St, New York, NY 10030',
+      coordinates: '40.8178, -73.9442',
+      embedUrl:
+        'https://maps.google.com/maps?q=Strivers+Row+New+York&t=&z=18&ie=UTF8&iwloc=&output=embed',
+    },
+    mintons: {
+      title: "Minton's Playhouse (W 118th St)",
+      address: '206 W 118th St, New York, NY 10026',
+      coordinates: '40.8048, -73.9535',
+      embedUrl:
+        'https://maps.google.com/maps?q=Mintons+Playhouse+206+W+118th+St+New+York&t=&z=18&ie=UTF8&iwloc=&output=embed',
+    },
   };
 
   const current = realLocations[selectedLocation] || realLocations.apollo_125;

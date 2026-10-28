@@ -4,6 +4,10 @@ import malcolmXImg from '../assets/images/harlem_malcolm_x_blvd_1793215269966.jp
 import brownstoneStoopImg from '../assets/images/harlem_brownstone_stoop_1793215271229.jpg';
 import muralAlleyImg from '../assets/images/harlem_mural_alley_1793215271966.jpg';
 import roverDockingImg from '../assets/images/harlem_rover_docking_1793215272492.jpg';
+import marcusGarveyImg from '../assets/images/harlem_marcus_garvey_park_1793218079457.jpg';
+import striversRowImg from '../assets/images/harlem_strivers_row_1793218079881.jpg';
+import mintonsImg from '../assets/images/harlem_mintons_playhouse_1793218079944.jpg';
+import riverWaterfrontImg from '../assets/images/harlem_river_waterfront_1793218080287.jpg';
 
 export const HARLEM_NODES: Record<string, StreetViewNode> = {
   node_apollo_125: {
@@ -344,6 +348,250 @@ export const HARLEM_NODES: Record<string, StreetViewNode> = {
       activeRoversInSector: 4,
     },
   },
+
+  node_marcus_garvey_park: {
+    id: 'node_marcus_garvey_park',
+    title: 'Marcus Garvey Park & Harlem Fire Watchtower',
+    corridor: 'Mount Morris Park Historic District (W 120th - W 124th St)',
+    address: '631 Mount Morris Park W, Harlem, New York, NY 10027',
+    coordinates: { lat: 40.8044, lng: -73.9439 },
+    defaultHeading: 10,
+    defaultPitch: 4,
+    defaultFov: 75,
+    imageSrc: marcusGarveyImg,
+    description:
+      'Lush sub-tropical sanctuary framed by Canary palms and red hibiscus gardens. High on the bedrock acropolis stands the 1856 cast-iron Harlem Fire Watchtower. Pristine white amphitheater steps curve into permeable paths tended by whisper-quiet botanical rovers.',
+    connections: [
+      {
+        targetId: 'node_malcolm_x',
+        label: 'Walk North to Malcolm X Blvd',
+        direction: 'north',
+        yaw: 350,
+        distanceMeters: 160,
+      },
+      {
+        targetId: 'node_mintons_playhouse',
+        label: 'Head West to Minton\'s Playhouse',
+        direction: 'west',
+        yaw: 265,
+        distanceMeters: 130,
+      },
+    ],
+    hotspots: [
+      {
+        id: 'hotspot_watchtower',
+        type: 'apollo_marquee',
+        title: 'Harlem Fire Watchtower (1856)',
+        subtitle: 'Historic cast-iron landmark atop the Mount Morris acropolis',
+        yaw: 12,
+        pitch: 24,
+        distance: '95m',
+        interactive: true,
+      },
+      {
+        id: 'hotspot_botany_rover',
+        type: 'sweeper_rover',
+        title: 'Botanical Tending Rover #11',
+        subtitle: 'Soil hydration monitoring · Micro-pruning · Organic fertilizer',
+        yaw: 145,
+        pitch: -18,
+        distance: '4.5m',
+        interactive: true,
+      },
+    ],
+    telemetry: {
+      canopyDensity: 'Botanical Date Palms & Ferns 95% Shaded',
+      permeablePaverArea: '22,400 sq.m White Limestone Amphitheater',
+      cisternCapacityPercent: 88,
+      airQualityIndex: 9, // Pristine Nature
+      ambientTempF: 75,
+      fragranceNotes: ['Red Hibiscus Blossoms', 'Moist Fern Soil', 'Sweet Grass Dew'],
+      activeRoversInSector: 3,
+    },
+  },
+
+  node_strivers_row: {
+    id: 'node_strivers_row',
+    title: 'Historic Strivers\' Row (W 138th St)',
+    corridor: 'St. Nicholas Historic District / Strivers\' Row',
+    address: '201 W 138th St, Harlem, New York, NY 10030',
+    coordinates: { lat: 40.8178, lng: -73.9442 },
+    defaultHeading: 355,
+    defaultPitch: -2,
+    defaultFov: 75,
+    imageSrc: striversRowImg,
+    description:
+      'Gleaming architectural jewel of Harlem designed by Stanford White. Distinctive yellow-brick and sandstone facades with ornate carriage arches and private courtyards, lined with fan palms and immaculate self-cleaning limestone paving.',
+    connections: [
+      {
+        targetId: 'node_brownstone_stoop',
+        label: 'Walk South to Astor Row Stoops',
+        direction: 'south',
+        yaw: 180,
+        distanceMeters: 210,
+      },
+      {
+        targetId: 'node_apollo_125',
+        label: 'Take Boulevard South to 125th St',
+        direction: 'south',
+        yaw: 195,
+        distanceMeters: 380,
+      },
+    ],
+    hotspots: [
+      {
+        id: 'hotspot_carriage_arch',
+        type: 'stoop_polisher',
+        title: 'Stanford White Carriage Archway',
+        subtitle: 'Original 1891 bronze "Walk Your Horses" inscription restored',
+        yaw: 42,
+        pitch: 2,
+        distance: '16m',
+        interactive: true,
+      },
+      {
+        id: 'hotspot_strivers_rover',
+        type: 'sweeper_rover',
+        title: 'Strivers Eco-Sweep Rover #09',
+        subtitle: 'Curb scanning · Whisper rotary brushes · Silent electric drive',
+        yaw: 135,
+        pitch: -24,
+        distance: '3.8m',
+        interactive: true,
+      },
+    ],
+    telemetry: {
+      canopyDensity: 'Slender Fan Palms & Greenery 82% Shaded',
+      permeablePaverArea: '16,200 sq.m Restored Sandstone & Pavers',
+      cisternCapacityPercent: 78,
+      airQualityIndex: 11, // Pristine
+      ambientTempF: 76,
+      fragranceNotes: ['Aged Sandstone Brick', 'White Lily Petals', 'Crisp Evening Air'],
+      activeRoversInSector: 2,
+    },
+  },
+
+  node_mintons_playhouse: {
+    id: 'node_mintons_playhouse',
+    title: 'Minton\'s Playhouse & Bebop Promenade',
+    corridor: 'West 118th Street Jazz Heritage Promenade',
+    address: '206 W 118th St, Harlem, New York, NY 10026',
+    coordinates: { lat: 40.8048, lng: -73.9535 },
+    defaultHeading: 345,
+    defaultPitch: -1,
+    defaultFov: 75,
+    imageSrc: mintonsImg,
+    description:
+      'The sacred cradle where bebop was born. Historic neon marquee glows warmly above cobblestone sidewalk seating shaded by Canary palms. Pedestrians enjoy espresso amidst live saxophone resonances and tree trunk mist micro-cooling.',
+    connections: [
+      {
+        targetId: 'node_marcus_garvey_park',
+        label: 'Walk East toward Marcus Garvey Park',
+        direction: 'east',
+        yaw: 85,
+        distanceMeters: 130,
+      },
+      {
+        targetId: 'node_apollo_125',
+        label: 'Head North to 125th St Corridor',
+        direction: 'north',
+        yaw: 15,
+        distanceMeters: 190,
+      },
+    ],
+    hotspots: [
+      {
+        id: 'hotspot_mintons_marquee',
+        type: 'apollo_marquee',
+        title: 'Minton\'s Playhouse Marquee (Est. 1938)',
+        subtitle: 'Birthplace of Bebop · Monk, Parker, Gillespie cultural legacy',
+        yaw: 310,
+        pitch: 12,
+        distance: '8m',
+        interactive: true,
+      },
+      {
+        id: 'hotspot_mintons_mist',
+        type: 'mist_nozzle',
+        title: 'Café Pergola Mist Nozzle #22',
+        subtitle: 'Sub-tropical micro-cooling for outdoor terrace diners',
+        yaw: 12,
+        pitch: 8,
+        distance: '4.2m',
+        interactive: true,
+      },
+    ],
+    telemetry: {
+      canopyDensity: 'Sub-tropical Palm Canopy 89% Shaded',
+      permeablePaverArea: '8,400 sq.m Cobblestone & Limestone',
+      cisternCapacityPercent: 69,
+      airQualityIndex: 12, // Pristine
+      ambientTempF: 77,
+      fragranceNotes: ['Roasted Espresso Beans', 'Brass Instrument Polish', 'Frangipani Nectar'],
+      activeRoversInSector: 3,
+    },
+  },
+
+  node_river_waterfront: {
+    id: 'node_river_waterfront',
+    title: 'Harlem River Eco-Esplanade & Boardwalk',
+    corridor: 'Harlem River Greenway & Solar Ferry Pier',
+    address: 'Harlem River Esplanade (at E 125th St), New York, NY 10035',
+    coordinates: { lat: 40.8021, lng: -73.9312 },
+    defaultHeading: 65,
+    defaultPitch: -3,
+    defaultFov: 75,
+    imageSrc: riverWaterfrontImg,
+    description:
+      'Curved timber boardwalk and white limestone promenade overlooking the Harlem River. Canary palms rustle in the river breeze as sleek autonomous aquatic skimmers keep the shoreline spotless while electric solar ferries dock at the timber pier.',
+    connections: [
+      {
+        targetId: 'node_apollo_125',
+        label: 'Return West to 125th St Apollo Corridor',
+        direction: 'west',
+        yaw: 260,
+        distanceMeters: 320,
+      },
+      {
+        targetId: 'node_malcolm_x',
+        label: 'Walk to Malcolm X Boulevard',
+        direction: 'west',
+        yaw: 280,
+        distanceMeters: 260,
+      },
+    ],
+    hotspots: [
+      {
+        id: 'hotspot_solar_ferry',
+        type: 'solar_dock',
+        title: 'Harlem Solar Ferry Pavilion',
+        subtitle: 'Curved photovoltaic canopy · Zero-emission East River transit',
+        yaw: 48,
+        pitch: 6,
+        distance: '45m',
+        interactive: true,
+      },
+      {
+        id: 'hotspot_river_skimmer',
+        type: 'sweeper_rover',
+        title: 'Autonomous Aquatic Skimmer #01',
+        subtitle: 'Solar catamaran rover · Cleans river surface and floating debris',
+        yaw: 110,
+        pitch: -18,
+        distance: '24m',
+        interactive: true,
+      },
+    ],
+    telemetry: {
+      canopyDensity: 'Waterfront Palm Line 74% Shaded',
+      permeablePaverArea: '28,000 sq.m Timber Boardwalk & Pavers',
+      cisternCapacityPercent: 94,
+      airQualityIndex: 8, // Maritime Clean
+      ambientTempF: 74,
+      fragranceNotes: ['Fresh River Breeze', 'Cedar Boardwalk Timber', 'Salt Spray & Palm'],
+      activeRoversInSector: 3,
+    },
+  },
 };
 
 export const INITIAL_ROVERS: AutonomousRover[] = [
@@ -407,6 +655,36 @@ export const INITIAL_ROVERS: AutonomousRover[] = [
     position: { x: 52, y: 22 },
     distanceCoveredTodayKm: 6.8,
     strayDebrisCleared: 42,
+  },
+  {
+    id: 'rover_09',
+    name: 'Strivers Eco-Rover #09',
+    callsign: 'SWEEP-09',
+    type: 'sweeper',
+    sector: 'Strivers\' Row W 138th St Historic District',
+    batteryPercent: 91,
+    status: 'patrolling',
+    brushesRpm: 640,
+    hopperCapacityPercent: 28,
+    lidarActive: true,
+    position: { x: 44, y: 15 },
+    distanceCoveredTodayKm: 11.2,
+    strayDebrisCleared: 96,
+  },
+  {
+    id: 'rover_11',
+    name: 'Marcus Garvey Botanical #11',
+    callsign: 'BOTANY-11',
+    type: 'sweeper',
+    sector: 'Marcus Garvey Park & Amphitheater',
+    batteryPercent: 86,
+    status: 'sweeping',
+    brushesRpm: 580,
+    hopperCapacityPercent: 44,
+    lidarActive: true,
+    position: { x: 62, y: 78 },
+    distanceCoveredTodayKm: 9.4,
+    strayDebrisCleared: 168,
   },
 ];
 

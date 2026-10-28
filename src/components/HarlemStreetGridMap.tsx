@@ -26,6 +26,10 @@ export const HarlemStreetGridMap: React.FC<Props> = ({
     node_brownstone_stoop: { x: 215, y: 65, label: 'W 130th Stoops' },
     node_mural_alley: { x: 150, y: 130, label: 'Jazz Alley' },
     node_rover_docking: { x: 65, y: 210, label: 'Solar Dock Hub' },
+    node_marcus_garvey_park: { x: 215, y: 235, label: 'Marcus Garvey Pk' },
+    node_strivers_row: { x: 140, y: 35, label: "Strivers' Row" },
+    node_mintons_playhouse: { x: 85, y: 245, label: "Minton's Playhouse" },
+    node_river_waterfront: { x: 275, y: 175, label: 'River Esplanade' },
   };
 
   const currentNode = nodeMapPositions[currentNodeId] || { x: 120, y: 190, label: 'Harlem' };
