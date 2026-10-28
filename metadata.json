@@ -1,0 +1,6 @@
+{
+  "name": "World Model: Harlem",
+  "description": "Eco-futuristic sub-tropical Google Street View controller and autonomous municipal simulation for reimagined Harlem.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
